@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/createEmployes/**").hasRole("ADMIN")
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Permitir Swagger UI
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception
@@ -45,7 +46,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
