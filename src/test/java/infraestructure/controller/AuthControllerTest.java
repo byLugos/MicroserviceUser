@@ -11,8 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import user.infraestructure.auth.JwtTokenProvider;
 import user.infraestructure.controller.AuthController;
-import user.infraestructure.controller.utils.JwtResponse;
-import user.infraestructure.controller.utils.LoginRequest;
+import user.infraestructure.controller.dtojwt.JwtResponse;
+import user.infraestructure.controller.dtojwt.LoginRequest;
 
 import java.util.Objects;
 

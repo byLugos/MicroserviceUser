@@ -36,12 +36,10 @@ class UserHandlerTest {
     }
     @Test
     void testCreateUser_InvalidRole() {
-        // Arrange
         UserDTORequest request = new UserDTORequest("John", "Doe", "123456", LocalDate.of(1990, 5, 15), "john.doe1@example.com", "password123", "+1234567890", 1L);
 
         when(userRepository.findRoleById(request.getIdRole())).thenReturn(Optional.empty());
 
-        // Act & Assert
         Exception exception = assertThrows(InvalidRoleException.class, () -> userHandler.createUser(request));
         assertEquals("El rol solicitado no existe", exception.getMessage());
         verify(userRepository, times(1)).findRoleById(request.getIdRole());

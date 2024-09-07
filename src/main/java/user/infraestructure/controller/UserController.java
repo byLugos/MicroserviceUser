@@ -13,7 +13,7 @@ import user.application.dto.request.UserDTORequest;
 import user.application.dto.response.UserDTOResponse;
 import user.application.handler.UserHandler;
 @RestController
-@RequestMapping("/createEmployes")
+@RequestMapping("/createUsers")
 @AllArgsConstructor
 @Tag(name = "User Management", description = "Endpoints para la gestión de usuarios")
 public class UserController {

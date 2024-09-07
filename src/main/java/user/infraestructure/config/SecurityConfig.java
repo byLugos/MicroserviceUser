@@ -22,18 +22,20 @@ public class SecurityConfig {
     private final UserAuthService userAuthService;
     private final JwtAuthEntryPoint unauthorizedHandler;
     private final JwtTokenProvider jwtTokenProvider;
+
     @Bean
     public JwtAuthTokenFilter jwtAuthTokenFilter() {
         return new JwtAuthTokenFilter(jwtTokenProvider, userAuthService);
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/createEmployes/**").hasRole("ADMIN")
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Permitir Swagger UI
+                        .requestMatchers("/createUsers/**").hasRole("ADMIN")
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception
@@ -46,11 +48,11 @@ public class SecurityConfig {
 
         return http.build();
     }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();

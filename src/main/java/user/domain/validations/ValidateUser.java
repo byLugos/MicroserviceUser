@@ -1,4 +1,4 @@
-package user.domain.utils;
+package user.domain.validations;
 import user.domain.exceptions.*;
 
 import java.time.LocalDate;

@@ -23,11 +23,8 @@ public class User {
         this.phone = phone;
         this.role = role;
     }
-
     public User() {
-
     }
-
     public Long getId() {
         return id;
     }

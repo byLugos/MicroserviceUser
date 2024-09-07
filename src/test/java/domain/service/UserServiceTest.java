@@ -32,7 +32,7 @@ class UserServiceTest {
     void testCreateUser_Success() {
         //Datos de prueba
         Long idRole = 1L;
-        Role role = new Role(idRole, "ROLE_AUX_BODEGA");
+        Role role = new Role(idRole, "ROLE_CLIENTE");
         when(userOut.findRoleById(idRole)).thenReturn(Optional.of(role));
         when(userOut.findUserByEmail("test1@example.com")).thenReturn(Optional.empty());
         when(userOut.existsBycc("12345")).thenReturn(false);
@@ -74,7 +74,7 @@ class UserServiceTest {
         assertNotNull(createdUser);
         assertEquals("John", createdUser.getName());
         assertEquals("Doe", createdUser.getLastName());
-        assertEquals("ROLE_AUX_BODEGA", createdUser.getRole().getName());
+        assertEquals("ROLE_CLIENTE", createdUser.getRole().getName());
         verify(userOut, times(1)).saveUser(any(User.class));
     }
 

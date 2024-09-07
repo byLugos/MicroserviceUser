@@ -5,7 +5,7 @@ import user.domain.exceptions.InvalidRoleException;
 import user.domain.model.Role;
 import user.domain.model.User;
 import user.domain.ports.api.UserIn;
-import user.domain.utils.ValidateUser;
+import user.domain.validations.ValidateUser;
 import user.domain.ports.spi.UserOut;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -30,8 +30,8 @@ public class UserService implements UserIn {
             throw new InvalidDocumentException("El documento de identidad ya se encuentra registrado");
         }
         Optional<Role> role = userOut.findRoleById(idRole);
-        if (role.isEmpty() || !Objects.equals(role.get().getName(), "ROLE_AUX_BODEGA")) {
-            String adviseRole = "El rol solicitado no existe o el rol no es un 'aux_bodega'";
+        if (role.isEmpty() || (!Objects.equals(role.get().getName(), "ROLE_AUXBODEGA") && !Objects.equals(role.get().getName(), "ROLE_CLIENTE"))) {
+            String adviseRole = "El rol solicitado no existe o el rol no es un 'AUX_BODEGA o 'CLIENTE'";
             throw new InvalidRoleException(adviseRole);
         }
         User user = new User(null, name, lastName, cc, birthDate, email, password, phone, role.get());

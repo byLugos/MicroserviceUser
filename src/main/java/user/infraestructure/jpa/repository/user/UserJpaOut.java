@@ -22,12 +22,10 @@ public class UserJpaOut implements UserOut {
     private final UserJpaRepo userJpaRepo;
     private final RoleJpaRepo roleJpaRepo;
     private final UserJpaMapper userJpaMapper;
-
     @Override
     public boolean existsById(Long id) {
         return userJpaRepo.existsById(id);
     }
-
     @Override
     @Transactional
     public User saveUser(User user) {
@@ -38,25 +36,21 @@ public class UserJpaOut implements UserOut {
 
         return userJpaMapper.toDomain(savedUserEntity);
     }
-
     @Override
     public Optional<User> findUserById(Long id) {
         Optional<UserEntity> userEntityOpt = userJpaRepo.findById(id);
         return userEntityOpt.map(userJpaMapper::toDomain);
     }
-
     @Override
     public List<User> findAllUsers() {
         List<UserEntity> userEntities = userJpaRepo.findAll();
         return userEntities.stream().map(userJpaMapper::toDomain).collect(Collectors.toList());
     }
-
     @Override
     public Optional<Role> findRoleById(Long id) {
         Optional<RoleEntity> roleEntityOpt = roleJpaRepo.findById(id);
         return roleEntityOpt.map(userJpaMapper::toDomainRole);
     }
-
     @Override
     public Optional<User> findUserByEmail(String username) {
         Optional<UserEntity> userEntityOpt = userJpaRepo.findByEmail(username);
@@ -64,8 +58,6 @@ public class UserJpaOut implements UserOut {
         User user = userEntityOpt.map(userJpaMapper::toDomain).orElse(null);
         return Optional.ofNullable(user);
     }
-
-
     @Override
     public boolean existsBycc(String cc) {
         return userJpaRepo.existsBycc(cc);

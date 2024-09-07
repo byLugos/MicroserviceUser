@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import user.infraestructure.auth.JwtTokenProvider;
-import user.infraestructure.controller.utils.JwtResponse;
-import user.infraestructure.controller.utils.LoginRequest;
+import user.infraestructure.controller.dtojwt.JwtResponse;
+import user.infraestructure.controller.dtojwt.LoginRequest;
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
@@ -47,4 +47,3 @@ public class AuthController {
         }
     }
 }
-
