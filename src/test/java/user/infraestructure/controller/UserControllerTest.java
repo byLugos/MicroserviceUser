@@ -1,4 +1,4 @@
-package infraestructure.controller;
+package user.infraestructure.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import user.application.dto.request.UserDTORequest;
 import user.application.dto.response.UserDTOResponse;
 import user.application.handler.UserHandler;
-import user.infraestructure.controller.UserController;
 
 import java.time.LocalDate;
 

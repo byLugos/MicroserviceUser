@@ -1,4 +1,4 @@
-package infraestructure.jpa.repository.user;
+package user.infraestructure.jpa.repository.user;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

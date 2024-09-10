@@ -8,6 +8,8 @@ import user.infraestructure.jpa.entity.RoleEntity;
 import user.infraestructure.jpa.entity.UserEntity;
 import user.infraestructure.jpa.repository.role.RoleJpaRepo;
 import user.infraestructure.jpa.repository.user.UserJpaRepo;
+import user.infraestructure.utils.Constants;
+
 import java.time.LocalDate;
 @Configuration
 @RequiredArgsConstructor
@@ -15,32 +17,34 @@ public class InitDB {
     private final UserJpaRepo userJpaRepo;
     private final RoleJpaRepo roleJpaRepo;
     private final BCryptPasswordEncoder passwordEncoder;
+
     @Bean
     CommandLineRunner initAdminUser() {
         return args -> {
-            RoleEntity adminRole = roleJpaRepo.findByName("ROLE_ADMIN")
+            RoleEntity adminRole = roleJpaRepo.findByName(Constants.ROLE_ADMIN)
                     .orElseGet(() -> {
                         RoleEntity newRole = new RoleEntity();
-                        newRole.setName("ROLE_ADMIN");
+                        newRole.setName(Constants.ROLE_ADMIN);
                         return roleJpaRepo.save(newRole);
                     });
-            if (userJpaRepo.findByEmail("admin123@ejemplo.com").isEmpty()) {
-                String encodedPassword = passwordEncoder.encode("password123");
+
+            if (userJpaRepo.findByEmail(Constants.ADMIN_EMAIL).isEmpty()) {
+                String encodedPassword = passwordEncoder.encode(Constants.ADMIN_PASSWORD);
                 userJpaRepo.save(new UserEntity(
                         null,
-                        "Admin",
-                        "R",
-                        "12345",
-                        LocalDate.of(1990, 5, 15),
-                        "admin123@ejemplo.com",
+                        Constants.ADMIN_FIRST_NAME,
+                        Constants.ADMIN_LAST_NAME,
+                        Constants.ADMIN_CC,
+                        LocalDate.of(Constants.ADMIN_BIRTH_YEAR, Constants.ADMIN_BIRTH_MONTH, Constants.ADMIN_BIRTH_DAY),
+                        Constants.ADMIN_EMAIL,
                         encodedPassword,
-                        "5551234567",
+                        Constants.ADMIN_PHONE,
                         adminRole
                 ));
 
-                System.out.println("Administrador creado con éxito con email: admin123@ejemplo.com y contraseña: password123");
+                System.out.printf((Constants.ADMIN_CREATION_SUCCESS) + "%n", Constants.ADMIN_EMAIL, Constants.ADMIN_PASSWORD);
             } else {
-                System.out.println("El usuario administrador ya existe. No se creó un nuevo administrador.");
+                System.out.println(Constants.ADMIN_ALREADY_EXISTS);
             }
         };
     }

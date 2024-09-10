@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import user.domain.model.User;
 import user.domain.ports.spi.UserOut;
+import user.infraestructure.utils.Constants;
+
 import java.util.Collections;
 @Service
 @AllArgsConstructor
@@ -16,18 +18,18 @@ public class UserAuthService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userOut.findUserByEmail(email)
                 .orElseThrow(() -> {
-                    System.err.println("Usuario no encontrado con email: " + email);
-                    return new UsernameNotFoundException("Usuario no encontrado con email: " + email);
+                    System.err.println(Constants.USER_NOT_FOUND + email);
+                    return new UsernameNotFoundException(Constants.USER_NOT_FOUND + email);
                 });
         if (user.getPassword() == null) {
-            System.err.println("Contraseña para el usuario con email " + email + " es null!");
+            System.err.printf((Constants.PASSWORD_NULL) + "%n", email);
         } else {
-            System.out.println("Contraseña cifrada obtenida de la base de datos para " + email + ": " + user.getPassword());
+            System.out.printf((Constants.PASSWORD_RETRIEVED) + "%n", email, user.getPassword());
         }
         if (user.getRole() == null) {
-            System.err.println("Rol para el usuario con email " + email + " es null!");
+            System.err.printf((Constants.ROLE_NULL) + "%n", email);
         } else {
-            System.out.println("Rol obtenido para el usuario con email " + email + ": " + user.getRole().getName());
+            System.out.printf((Constants.ROLE_RETRIEVED) + "%n", email, user.getRole().getName());
         }
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),

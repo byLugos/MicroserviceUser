@@ -1,5 +1,4 @@
 package user.infraestructure.jpa.repository.user;
-
 import org.hibernate.Hibernate;
 import org.springframework.transaction.annotation.Transactional;
 import user.domain.model.Role;
@@ -11,11 +10,8 @@ import user.infraestructure.jpa.mapper.UserJpaMapper;
 import user.infraestructure.jpa.repository.role.RoleJpaRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Component
 @AllArgsConstructor
 public class UserJpaOut implements UserOut {
@@ -44,7 +40,9 @@ public class UserJpaOut implements UserOut {
     @Override
     public List<User> findAllUsers() {
         List<UserEntity> userEntities = userJpaRepo.findAll();
-        return userEntities.stream().map(userJpaMapper::toDomain).collect(Collectors.toList());
+        return userEntities.stream()
+                .map(userJpaMapper::toDomain)
+                .toList();
     }
     @Override
     public Optional<Role> findRoleById(Long id) {

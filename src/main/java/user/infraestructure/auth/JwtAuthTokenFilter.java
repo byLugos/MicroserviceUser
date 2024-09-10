@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import user.infraestructure.auth.serviceauth.UserAuthService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import user.infraestructure.utils.Constants;
 
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain)
             throws ServletException, IOException {
+
         try {
             String jwt = getJwtFromRequest(request);
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
@@ -47,7 +49,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception ex) {
-            logger.error("No se puede establecer la autenticación de usuario: {}", ex);
+            logger.error(Constants.USER_AUTHENTICATION_FAILED, ex);
         }
         filterChain.doFilter(request, response);
     }

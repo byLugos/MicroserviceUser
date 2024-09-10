@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
                         url = "http://localhost:8080",
                         description = "Servidor local",
                         variables = {
-                                @ServerVariable(name = "port", defaultValue = "8080", description = "Puerto del servidor")
+                                @ServerVariable(name = "port", defaultValue = "8001", description = "Puerto del servidor")
                         }
                 )
         }

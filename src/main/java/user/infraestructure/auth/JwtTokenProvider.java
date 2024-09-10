@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
+import user.infraestructure.utils.Constants;
+
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
@@ -61,7 +63,7 @@ public class JwtTokenProvider {
             Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            System.err.println("Token JWT no válido: " + e.getMessage());
+            System.err.println(Constants.INVALID_JWT_TOKEN + e.getMessage());
         }
         return false;
     }
