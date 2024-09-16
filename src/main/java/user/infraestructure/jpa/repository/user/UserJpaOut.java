@@ -54,7 +54,6 @@ public class UserJpaOut implements UserOut {
     @Override
     public Optional<User> findUserByEmail(String username) {
         Optional<UserEntity> userEntityOpt = userJpaRepo.findByEmail(username);
-
         User user = userEntityOpt.map(userJpaMapper::toDomain).orElse(null);
         return Optional.ofNullable(user);
     }

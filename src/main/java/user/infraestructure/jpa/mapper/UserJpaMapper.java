@@ -1,11 +1,14 @@
 package user.infraestructure.jpa.mapper;
+
 import user.domain.model.Role;
 import user.domain.model.User;
 import user.infraestructure.jpa.entity.RoleEntity;
 import user.infraestructure.jpa.entity.UserEntity;
 import org.mapstruct.Mapper;
+
 @Mapper(componentModel = "spring")
 public interface UserJpaMapper {
+
     default UserEntity toEntity(User user) {
         if (user == null) return null;
         UserEntity entity = new UserEntity();
@@ -20,6 +23,7 @@ public interface UserJpaMapper {
         entity.setRole(toEntityRole(user.getRole()));
         return entity;
     }
+
     default User toDomain(UserEntity userEntity) {
         if (userEntity == null) return null;
         User domain = new User();
@@ -34,6 +38,20 @@ public interface UserJpaMapper {
         domain.setRole(toDomainRole(userEntity.getRole()));
         return domain;
     }
-    Role toDomainRole(RoleEntity roleEntity);
-    RoleEntity toEntityRole(Role role);
+
+    default Role toDomainRole(RoleEntity roleEntity) {
+        if (roleEntity == null) return null; // Manejo de nulo
+        Role role = new Role();
+        role.setId(roleEntity.getId());
+        role.setName(roleEntity.getName());
+        return role;
+    }
+
+    default RoleEntity toEntityRole(Role role) {
+        if (role == null) return null; // Manejo de nulo
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setId(role.getId());
+        roleEntity.setName(role.getName());
+        return roleEntity;
+    }
 }
