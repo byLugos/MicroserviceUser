@@ -4,17 +4,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import user.infraestructure.auth.JwtTokenProvider;
+import user.infraestructure.auth.serviceauth.AuthService;
 import user.infraestructure.controller.dtojwt.JwtResponse;
 import user.infraestructure.controller.dtojwt.LoginRequest;
 @RestController
@@ -22,8 +17,9 @@ import user.infraestructure.controller.dtojwt.LoginRequest;
 @AllArgsConstructor
 @Tag(name = "Authentication", description = "Endpoints para la autenticación de usuarios")
 public class AuthController {
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
+
+    private final AuthService authInfrastructureService;
+
     @PostMapping("/login")
     @Operation(summary = "Autenticar usuario", description = "Autentica un usuario basado en las credenciales proporcionadas y devuelve un token JWT.")
     @ApiResponses(value = {
@@ -31,19 +27,6 @@ public class AuthController {
             @ApiResponse(responseCode = "401", description = "Credenciales inválidas")
     })
     public ResponseEntity<JwtResponse> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.getEmail(),
-                            loginRequest.getPassword()
-                    )
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = jwtTokenProvider.generateToken(authentication);
-            return ResponseEntity.ok(new JwtResponse(jwt));
-        } catch (Exception ex) {
-            System.err.println("Error de autenticación: " + ex.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new JwtResponse("Credenciales inválidas"));
-        }
+        return authInfrastructureService.authenticateUser(loginRequest);
     }
 }

@@ -2,6 +2,7 @@ package user.application.handler;
 import user.application.dto.request.UserDTORequest;
 import user.application.dto.response.UserDTOResponse;
 import user.application.mapper.UserMapper;
+import user.application.utils.Constants;
 import user.domain.model.Role;
 import user.domain.model.User;
 import user.domain.ports.api.UserIn;
@@ -21,7 +22,7 @@ public class UserHandler {
     private final UserMapper userMapper;
     public UserDTOResponse createUser(UserDTORequest request) {
         Role role = userRepository.findRoleById(request.getIdRole())
-                .orElseThrow(() -> new InvalidRoleException("El rol solicitado no existe"));
+                .orElseThrow(() -> new InvalidRoleException(Constants.ROLE_NOT_FOUND));
         String encryptedPassword = passwordEncoder.encode(request.getPassword());
         User user = userMapper.toDomain(request, role);
         user.setPassword(encryptedPassword);

@@ -1,4 +1,4 @@
-package application.handler;
+package user.application.handler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

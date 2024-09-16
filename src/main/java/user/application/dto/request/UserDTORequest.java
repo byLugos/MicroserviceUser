@@ -3,6 +3,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import user.application.utils.Constants;
+
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,24 +16,25 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTORequest {
-    @NotBlank(message = "El nombre no puede estar vacío.")
+    @NotBlank(message = Constants.NAME_NOT_BLANK)
     private String name;
-    @NotBlank(message = "El apellido no puede estar vacío.")
+    @NotBlank(message = Constants.LASTNAME_NOT_BLANK)
     private String lastName;
-    @NotBlank(message = "El documento de identidad no puede estar vacío.")
-    @Pattern(regexp = "\\d+", message = "El documento de identidad debe ser numérico.")
+    @NotBlank(message = Constants.DOCUMENT_NOT_BLANK)
+    @Pattern(regexp = "\\d+", message = Constants.DOCUMENT_NUMERIC)
     private String cc;
-    @NotNull(message = "La fecha de nacimiento no puede estar vacía.")
-    @Past(message = "La fecha de nacimiento debe ser en el pasado.")
+    @NotNull(message = Constants.BIRTHDATE_NOT_NULL)
+    @Past(message = Constants.BIRTHDATE_PAST)
     private LocalDate birthDate;
-    @NotBlank(message = "El correo no puede estar vacío.")
-    @Email(message = "Debe proporcionar un correo electrónico válido.")
+    @NotBlank(message = Constants.EMAIL_NOT_BLANK)
+    @Email(message = Constants.EMAIL_VALID)
     private String email;
-    @NotBlank(message = "La contraseña no puede estar vacía.")
+    @NotBlank(message = Constants.PASSWORD_NOT_BLANK)
     private String password;
-    @NotBlank(message = "El teléfono no puede estar vacío.")
-    @Pattern(regexp = "^\\+?\\d{1,13}$", message = "El teléfono debe contener un máximo de 13 caracteres y puede contener el símbolo +.")
+    @NotBlank(message = Constants.PHONE_NOT_BLANK)
+    @Pattern(regexp = "^\\+?\\d{1,13}$", message = Constants.PHONE_PATTERN)
     private String phone;
-    @NotNull(message = "El ID del rol no puede estar vacío.")
+    @NotNull(message = Constants.IDROLE_NOT_NULL)
     private Long idRole;
+
 }
